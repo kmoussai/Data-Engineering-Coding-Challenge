@@ -14,7 +14,7 @@ class ArticleSpider(scrapy.Spider):
 
     custom_settings = {
         # this value is to make sure that the script stop properly cause there is a lot of historiq there.
-        'CLOSESPIDER_ITEMCOUNT': 100
+        'CLOSESPIDER_ITEMCOUNT': 5
     }
 
     def parse(self, response):
@@ -28,8 +28,7 @@ class ArticleSpider(scrapy.Spider):
         # Next page or older article
         # there is a link in the bottom of the start page that lead to older articles
         next_page = response.xpath("//a[@rel='prev']/@href").extract_first()
-        if next_page is not None and limit > 0:
-            limit = limit - 1
+        if next_page is not None:
             next_page_link = response.urljoin(next_page)
             yield Request(next_page_link, callback=self.parse, )
 
