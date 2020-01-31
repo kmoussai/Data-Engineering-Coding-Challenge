@@ -3,18 +3,18 @@ import scrapy
 from ArticlesParser.items import articleItem
 from scrapy.loader import ItemLoader
 from scrapy.http import Request
+from scrapy.utils.project import get_project_settings
 
 
 class ArticleSpider(scrapy.Spider):
     name = "Articles"
     start_urls = [
         # During my search i found this page where there is all articles for a specific day.
-        "https://www.theguardian.com/world/2020/jan/29/all"
+        "https://www.theguardian.com/world/2020/jan/01/all"
     ]
 
     custom_settings = {
-        # this value is to make sure that the script stop properly cause there is a lot of historiq there.
-        'CLOSESPIDER_ITEMCOUNT': 5
+        'CLOSESPIDER_ITEMCOUNT': get_project_settings().get("ARTICLE_COUNT")
     }
 
     def parse(self, response):
@@ -23,7 +23,8 @@ class ArticleSpider(scrapy.Spider):
             # get all link of articles in page and parse them one by one
             url = article.xpath(".//a//@href").extract_first()
             # i make the parse just for articles so i ingored the video pages
-            if url is not None and "/video" not in url:
+            checkVideoGallery = "/video" not in url and "/gallery" not in url
+            if url is not None and checkVideoGallery:
                 yield Request(url, callback=self.parseArticle)
         # Next page or older article
         # there is a link in the bottom of the start page that lead to older articles
