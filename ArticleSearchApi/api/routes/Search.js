@@ -1,7 +1,7 @@
 const express = require("express")
 
 const router = express.Router()
-const client = require('../models/dbClient')
+var client = require('../models/dbClient')
 
 const repoUrl = "https://github.com/kmoussai/Data-Engineering-Coding-Challenge"
 
@@ -43,7 +43,6 @@ router.get('/', (request, response, next) => {
                     result
                 }
                 response.status(200).json(finalResult)
-                db.close()
             })
     })
 })
