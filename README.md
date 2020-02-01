@@ -63,3 +63,7 @@ cd ArticleSearchApi && npm install && npm start
 ## Module required for scraping
 * [dnspython](http://www.dnspython.org/)
 * [Scrapy](https://scrapy.org/)
+
+## Contact
+* [linkedIn](https://www.linkedin.com/in/kmoussai/)
+* [Twitter](https://twitter.com/k_moussai)
