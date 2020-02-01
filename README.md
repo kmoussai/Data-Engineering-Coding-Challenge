@@ -26,7 +26,7 @@ cd ArticlesParser && scrapy crawl Articles && cd -
 ## API
 #### Setup
 
-Set Env variable in `ArticleSearchApi/nodemon.js`
+Set Env variable in `ArticleSearchApi/nodemon.json`
 
 ```
 {
