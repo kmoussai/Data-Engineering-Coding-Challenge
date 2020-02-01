@@ -5,7 +5,7 @@ The goal of this coding challenge is to create a solution that crawls for articl
 ## Crawling
 #### Setup
 
-setup your settings in `/ArticlesParser/ArticlesParser/settings.py`
+setup settings in `/ArticlesParser/ArticlesParser/settings.py`
 
 ```
 # mongoDB data
