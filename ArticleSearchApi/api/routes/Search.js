@@ -1,19 +1,26 @@
 const express = require("express")
 
 const router = express.Router()
-var MongoClient = require('mongodb').MongoClient;
+const client = require('../models/dbClient')
+
+const repoUrl = "https://github.com/kmoussai/Data-Engineering-Coding-Challenge"
 
 
+router.get('/', (request, response, next) => {
 
-router.get('/:query', (request, response, next) => {
-
-    const uri = "mongodb+srv://kmoussai:H3pthJCVOMPSgD5I@cluster0-io2fq.mongodb.net?retryWrites=true&w=majority";
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    const limit = request.query._limit ? parseInt(request.query._limit) : 15;
+    //limit and toSkip for pagination
+    const limit = request.query._limit ? parseInt(request.query._limit) : 20;
     const toSkip = request.query._offset ? parseInt(request.query._offset) : 0;
-    query = {
+    const query = request.query.query;
+    if (!query) {
+        const error = new Error("Query param Not found, More info in GitRepo :" + repoUrl);
+        error.status = 400;
+        next(error);
+        return
+    }
+    searchQuery = {
         $text: {
-            $search: request.params.query
+            $search: query
         }
     }
     scoreQuery = {
@@ -22,8 +29,9 @@ router.get('/:query', (request, response, next) => {
         }
     }
     client.connect((err, db) => {
-        const articles = db.db("Challenge").collection("Articles");
-        articles.find(query)
+        const articles = db.db(process.env.MONGO_DB_NAME)
+            .collection(process.env.MONGO_DB_COLLECTION);
+        articles.find(searchQuery)
             .project(scoreQuery)
             .skip(toSkip)
             .limit(limit)
@@ -37,12 +45,7 @@ router.get('/:query', (request, response, next) => {
                 response.status(200).json(finalResult)
                 db.close()
             })
-
     })
-    // response.status(200).json({
-    //     message: "from Search"
-    // })
 })
-
 
 module.exports = router
