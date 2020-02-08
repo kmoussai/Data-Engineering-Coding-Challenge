@@ -1,10 +1,11 @@
 {
-    "env": {
-        "PORT": 5000,
-        "MONGO_PASSWORD": "H3pthJCVOMPSgD5I",
-        "MONGO_USER": "kmoussai",
-        "MONGO_SERVER": "cluster0-io2fq.mongodb.net",
-        "MONGO_DB_NAME": "Challenge",
-        "MONGO_DB_COLLECTION": "Articles"
-    }
+	"env": {
+		"PORT": 5000,
+		"MONGO_PASSWORD": "<Password>",
+		"MONGO_USER": "<User>",
+		"MONGO_SERVER": "<Server>",
+		
+		"MONGO_DB_NAME": "Challenge",
+		"MONGO_DB_COLLECTION": "Articles"
+	}
 }
